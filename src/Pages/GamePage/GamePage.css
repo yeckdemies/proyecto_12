@@ -1,0 +1,35 @@
+.game-page {
+  padding: var(--spacing-lg);
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.game-title {
+  font-size: var(--font-size-large);
+  color: var(--text-color);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 800px;
+}
+
+@media (max-width: 768px) {
+  .board {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}

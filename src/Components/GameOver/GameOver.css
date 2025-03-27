@@ -1,0 +1,49 @@
+.gameover-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(46, 41, 78, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.gameover-modal {
+  background: var(--bg-gradient);
+  background-size: 800% 800%;
+  animation: gradientAnimation 20s ease infinite;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--text-color);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.gameover-title {
+  font-size: var(--font-size-large);
+  margin-bottom: var(--spacing-md);
+}
+
+.gameover-score {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-lg);
+}
+
+.gameover-buttons button {
+  margin: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+}
+
+.gameover-buttons .secondary {
+  background-color: var(--tertiary-color);
+}
+
+.gameover-buttons .secondary:hover {
+  background-color: var(--accent-color);
+}

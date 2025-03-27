@@ -1,0 +1,107 @@
+:root {
+  --primary-color: #ff4c29;
+  --secondary-color: #ed217c;
+  --tertiary-color: #1b998b;
+  --accent-color: #2e294e;
+
+  --bg-gradient: linear-gradient(
+    270deg,
+    var(--primary-color),
+    var(--secondary-color),
+    var(--tertiary-color),
+    var(--accent-color)
+  );
+
+  --text-color: #ffffff;
+  --link-color: var(--primary-color);
+  --link-hover-color: var(--secondary-color);
+
+  --font-family: 'Poppins', sans-serif;
+  --font-size-base: 16px;
+  --font-size-large: 1.5rem;
+  --font-size-small: 0.875rem;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+
+  --border-radius: 8px;
+  --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+  --transition-speed: 0.3s;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  line-height: 1.6;
+  padding: var(--spacing-md);
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  background-size: 800% 800%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+button {
+  font-family: inherit;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  box-shadow: var(--box-shadow);
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 110%;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 120%;
+  }
+}

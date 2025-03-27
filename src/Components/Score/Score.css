@@ -1,0 +1,18 @@
+.score-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.score-label {
+  color: var(--text-color);
+  font-size: var(--font-size-large);
+  font-weight: bold;
+  font-family: var(--font-family);
+}
+
+.score-points {
+  font-size: var(--font-size-large);
+  color: var(--text-color);
+  font-weight: bold;
+}

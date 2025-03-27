@@ -1,0 +1,13 @@
+.timer-container {
+  border-radius: var(--border-radius);
+  display: inline-block;
+  min-width: 100px;
+  text-align: center;
+}
+
+.timer-text {
+  color: var(--text-color);
+  font-size: var(--font-size-large);
+  font-weight: bold;
+  font-family: var(--font-family);
+}

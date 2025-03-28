@@ -4,8 +4,8 @@ import './GameOver.css';
 const GameOver = ({ score, onRestart, onViewScores }) => {
   console.log('Renderizando GameOver');
   return (
-    <div className='gameover-overlay'>
-      <div className='gameover-modal'>
+    <section className='gameover-overlay'>
+      <article className='gameover-modal'>
         <h2 className='gameover-title'>¡Fin del Juego!</h2>
         <p className='gameover-score'>
           Tu puntuación: <strong>{score} puntos</strong>
@@ -16,8 +16,8 @@ const GameOver = ({ score, onRestart, onViewScores }) => {
             Clasificación Global
           </button>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 

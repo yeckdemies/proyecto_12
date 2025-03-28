@@ -114,10 +114,10 @@ const GamePage = () => {
   if (error) return <p>Error al cargar las cartas: {error.message}</p>;
 
   return (
-    <div className='game-page'>
-      <header className='game-header'>
+    <main className='game-page'>
+      <section className='game-header'>
         <h1 className='game-title'>Juego de Memoria</h1>
-        <div className='game-stats'>
+        <article className='game-stats'>
           <Score points={state.score} />
           {!state.previewActive && state.previewDone && (
             <Timer
@@ -126,8 +126,8 @@ const GamePage = () => {
               active={!state.gameOver}
             />
           )}
-        </div>
-      </header>
+        </article>
+      </section>
 
       <section className='board'>
         {state.gameCards.map((card) => (
@@ -146,7 +146,7 @@ const GamePage = () => {
           onViewScores={() => navigate('/scorespage')}
         />
       )}
-    </div>
+    </main>
   );
 };
 

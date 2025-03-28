@@ -26,12 +26,12 @@ const HomePage = () => {
   };
 
   return (
-    <div className='home-page'>
+    <main className='home-page'>
       <h1 className='home-title'>Bienvenido a Memo-Pockemon</h1>
       {!userData ? (
         <UserForm onSubmit={handleFormSubmit} />
       ) : (
-        <div className='user-data'>
+        <section className='user-data'>
           <p>
             Hola {userData.name}, tienes {userData.age} años.
           </p>
@@ -44,9 +44,9 @@ const HomePage = () => {
           <button className='reset-button' onClick={handleReset}>
             Reiniciar datos
           </button>
-        </div>
+        </section>
       )}
-    </div>
+    </main>
   );
 };
 

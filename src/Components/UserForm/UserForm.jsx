@@ -23,7 +23,7 @@ const UserForm = ({ onSubmit }) => {
 
   return (
     <form className='user-form' onSubmit={handleSubmit}>
-      <div className='form-group'>
+      <section className='form-group'>
         <label htmlFor='name'>Nombre:</label>
         <input
           type='text'
@@ -33,9 +33,9 @@ const UserForm = ({ onSubmit }) => {
           placeholder='Introduce tu nombre'
           required
         />
-      </div>
+      </section>
 
-      <div className='form-group'>
+      <section className='form-group'>
         <label htmlFor='age'>Edad:</label>
         <input
           type='number'
@@ -45,7 +45,7 @@ const UserForm = ({ onSubmit }) => {
           placeholder='Introduce tu edad'
           required
         />
-      </div>
+      </section>
 
       {error && <p className='error-message'>{error}</p>}
 

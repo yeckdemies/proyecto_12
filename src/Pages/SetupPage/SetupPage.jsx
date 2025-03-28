@@ -31,14 +31,14 @@ const SetupPage = () => {
   };
 
   return (
-    <div className='setup-page'>
+    <main className='setup-page'>
       <h1 className='setup-title'>Configuración del Juego</h1>
       <form className='setup-form' onSubmit={handleSubmit}>
-        <div className='setup-item'>
+        <section className='setup-item'>
           <label>Temática:</label>
           <span>Memo-Pockemon</span>
-        </div>
-        <div className='setup-item'>
+        </section>
+        <section className='setup-item'>
           <label>Nivel de Dificultad:</label>
           <div className='difficulty-options'>
             <label>
@@ -72,12 +72,12 @@ const SetupPage = () => {
               Avanzado
             </label>
           </div>
-        </div>
+        </section>
         <button type='submit' className='setup-button'>
           Iniciar Juego
         </button>
       </form>
-    </div>
+    </main>
   );
 };
 

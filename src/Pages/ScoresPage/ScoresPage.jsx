@@ -12,13 +12,13 @@ const ScoresPage = () => {
   }, []);
 
   return (
-    <div className='scores-page'>
+    <main className='scores-page'>
       <h1 className='scores-title'>Clasificación Global</h1>
 
       {scores.length === 0 ? (
         <p>No hay puntuaciones aún.</p>
       ) : (
-        <div className='scores-table'>
+        <section className='scores-table'>
           <div className='scores-row scores-header'>
             <div>Nombre</div>
             <div>Edad</div>
@@ -36,13 +36,13 @@ const ScoresPage = () => {
               <div>{score.score}</div>
             </div>
           ))}
-        </div>
+        </section>
       )}
 
       <button onClick={() => navigate('/')} className='back-button'>
         Volver al inicio
       </button>
-    </div>
+    </main>
   );
 };
 

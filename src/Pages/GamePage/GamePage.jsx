@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetchPokemonCards from '../../Hooks/useFetchPokemonCards';
 import Card from '../../Components/Card/Card';
@@ -56,17 +56,19 @@ const GamePage = () => {
     }
   }, [loading, cards, gameSettings, state.previewDone]);
 
-  const handleCardClick = (cardId) => {
-    if (state.previewActive || state.gameOver) return;
+  const handleCardClick = useCallback(
+    (cardId) => {
+      if (state.previewActive || state.gameOver) return;
 
-    const clicked = state.gameCards.find((card) => card.cardId === cardId);
-    if (!clicked || clicked.matched || state.selectedCards.includes(cardId))
-      return;
+      const clicked = state.gameCards.find((card) => card.cardId === cardId);
+      if (!clicked || clicked.matched || state.selectedCards.includes(cardId))
+        return;
+      if (state.selectedCards.length === 2) return;
 
-    if (state.selectedCards.length === 2) return;
-
-    dispatch({ type: 'FLIP_CARD', payload: cardId });
-  };
+      dispatch({ type: 'FLIP_CARD', payload: cardId });
+    },
+    [state.previewActive, state.gameOver, state.gameCards, state.selectedCards]
+  );
 
   useEffect(() => {
     if (state.selectedCards.length === 2) {

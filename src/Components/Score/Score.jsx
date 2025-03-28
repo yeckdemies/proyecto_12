@@ -1,7 +1,7 @@
 import React from 'react';
 import './Score.css';
 
-const Score = React.memo(({ points }) => {
+const Score = ({ points }) => {
   console.log('Renderizando Score');
   return (
     <section className='score-container'>
@@ -9,6 +9,6 @@ const Score = React.memo(({ points }) => {
       <span className='score-points'>{points}</span>
     </section>
   );
-});
+};
 
 export default Score;

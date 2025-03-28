@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Timer.css';
 
-const Timer = ({ initialSeconds, onTimeUp }) => {
+const Timer = ({ initialSeconds, onTimeUp, active = true }) => {
   console.log('Renderizando Timer');
   const [seconds, setSeconds] = useState(initialSeconds);
 
   useEffect(() => {
+    if (!active) return;
+
     if (seconds <= 0) {
       if (onTimeUp) onTimeUp();
       return;
@@ -16,7 +18,7 @@ const Timer = ({ initialSeconds, onTimeUp }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [seconds, onTimeUp]);
+  }, [seconds, onTimeUp, active]);
 
   const formatTime = (secs) => {
     const mins = Math.floor(secs / 60);

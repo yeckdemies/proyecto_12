@@ -1,50 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetchPokemonCards from '../../Hooks/useFetchPokemonCards';
 import Card from '../../Components/Card/Card';
 import Timer from '../../Components/Timer/Timer';
 import Score from '../../Components/Score/Score';
 import GameOver from '../../Components/GameOver/GameOver';
+
+import { gameReducer, initialGameState } from '../../Reducers/gameReducer';
 import './GamePage.css';
 
 const GamePage = () => {
   const navigate = useNavigate();
+  const [state, dispatch] = useReducer(gameReducer, initialGameState);
 
   const [gameSettings] = useState(() => {
     const settings = localStorage.getItem('gameSettings');
     return settings ? JSON.parse(settings) : null;
   });
 
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-
   useEffect(() => {
-    if (!gameSettings) {
-      navigate('/setuppage');
-    }
+    if (!gameSettings) navigate('/setuppage');
   }, [gameSettings, navigate]);
 
-  const pairsCount = gameSettings ? gameSettings.pairs : 0;
-  const { cards, loading, error } = useFetchPokemonCards(pairsCount);
-
-  const [gameCards, setGameCards] = useState([]);
-  const [selectedCards, setSelectedCards] = useState([]);
-  const [previewActive, setPreviewActive] = useState(true);
-  const [previewDone, setPreviewDone] = useState(false);
+  const { cards, loading, error } = useFetchPokemonCards(
+    gameSettings?.pairs || 0
+  );
 
   useEffect(() => {
-    if (!loading && cards.length > 0 && !previewDone) {
+    if (!loading && cards.length > 0 && !state.previewDone) {
       const revealed = cards.map((card) => ({
         ...card,
         flipped: true,
         matched: false
       }));
-      setGameCards(revealed);
-      setPreviewActive(true);
+      dispatch({ type: 'SET_CARDS', payload: revealed });
 
-      let timerDuration = 2000;
-      if (gameSettings.difficulty === 'medium') timerDuration = 3000;
-      else if (gameSettings.difficulty === 'hard') timerDuration = 4000;
+      const time =
+        gameSettings.difficulty === 'medium'
+          ? 3000
+          : gameSettings.difficulty === 'hard'
+          ? 4000
+          : 2000;
 
       const timer = setTimeout(() => {
         const hidden = cards.map((card) => ({
@@ -52,87 +48,67 @@ const GamePage = () => {
           flipped: false,
           matched: false
         }));
-        setGameCards(hidden);
-        setPreviewActive(false);
-        setPreviewDone(true);
-      }, timerDuration);
+        dispatch({ type: 'SET_CARDS', payload: hidden });
+        dispatch({ type: 'PREVIEW_DONE' });
+      }, time);
 
       return () => clearTimeout(timer);
     }
-  }, [loading, cards, gameSettings, previewDone]);
+  }, [loading, cards, gameSettings, state.previewDone]);
 
   const handleCardClick = (cardId) => {
-    if (previewActive || gameOver) return;
+    if (state.previewActive || state.gameOver) return;
 
-    const clickedCard = gameCards.find((card) => card.cardId === cardId);
-    if (!clickedCard || clickedCard.matched || selectedCards.includes(cardId))
+    const clicked = state.gameCards.find((card) => card.cardId === cardId);
+    if (!clicked || clicked.matched || state.selectedCards.includes(cardId))
       return;
-    if (selectedCards.length === 2) return;
 
-    setGameCards((prevCards) =>
-      prevCards.map((card) =>
-        card.cardId === cardId ? { ...card, flipped: true } : card
-      )
-    );
-    setSelectedCards((prev) => [...prev, cardId]);
+    if (state.selectedCards.length === 2) return;
+
+    dispatch({ type: 'FLIP_CARD', payload: cardId });
   };
 
   useEffect(() => {
-    if (selectedCards.length === 2) {
-      const [firstId, secondId] = selectedCards;
-      const firstCard = gameCards.find((card) => card.cardId === firstId);
-      const secondCard = gameCards.find((card) => card.cardId === secondId);
-      if (!firstCard || !secondCard) return;
+    if (state.selectedCards.length === 2) {
+      const [id1, id2] = state.selectedCards;
+      const c1 = state.gameCards.find((c) => c.cardId === id1);
+      const c2 = state.gameCards.find((c) => c.cardId === id2);
 
-      if (firstCard.id === secondCard.id) {
-        setGameCards((prevCards) =>
-          prevCards.map((card) =>
-            card.cardId === firstId || card.cardId === secondId
-              ? { ...card, matched: true }
-              : card
-          )
-        );
-        setSelectedCards([]);
-        setScore((prev) => prev + 10);
+      if (!c1 || !c2) return;
+
+      if (c1.id === c2.id) {
+        dispatch({ type: 'MATCH_CARDS' });
       } else {
-        setTimeout(() => {
-          setGameCards((prevCards) =>
-            prevCards.map((card) =>
-              card.cardId === firstId || card.cardId === secondId
-                ? { ...card, flipped: false }
-                : card
-            )
-          );
-          setSelectedCards([]);
-        }, 1000);
+        setTimeout(() => dispatch({ type: 'UNFLIP_CARDS' }), 1000);
       }
     }
-  }, [selectedCards, gameCards]);
+  }, [state.selectedCards, state.gameCards]);
 
   useEffect(() => {
     const allMatched =
-      gameCards.length > 0 && gameCards.every((card) => card.matched);
-    if (allMatched && previewDone) {
-      setGameOver(true);
+      state.gameCards.length > 0 &&
+      state.gameCards.every((card) => card.matched);
+    if (allMatched && state.previewDone) {
+      dispatch({ type: 'GAME_OVER' });
     }
-  }, [gameCards, previewDone]);
+  }, [state.gameCards, state.previewDone]);
 
   useEffect(() => {
-    if (gameOver) {
+    if (state.gameOver) {
       const scores = JSON.parse(localStorage.getItem('scores')) || [];
       const userData = JSON.parse(localStorage.getItem('userData'));
 
       const newScore = {
         name: userData?.name || 'Anónimo',
         age: userData?.age || 'N/A',
-        score,
+        score: state.score,
         date: new Date().toLocaleString(),
         difficulty: gameSettings.difficulty
       };
 
       localStorage.setItem('scores', JSON.stringify([...scores, newScore]));
     }
-  }, [gameOver]);
+  }, [state.gameOver, state.score, gameSettings]);
 
   if (loading) return <p>Cargando cartas...</p>;
   if (error) return <p>Error al cargar las cartas: {error.message}</p>;
@@ -142,19 +118,19 @@ const GamePage = () => {
       <header className='game-header'>
         <h1 className='game-title'>Juego de Memoria</h1>
         <div className='game-stats'>
-          <Score points={score} />
-          {!previewActive && previewDone && (
+          <Score points={state.score} />
+          {!state.previewActive && state.previewDone && (
             <Timer
               initialSeconds={gameSettings.time}
-              paused={previewActive}
-              onTimeUp={() => setGameOver(true)}
+              onTimeUp={() => dispatch({ type: 'GAME_OVER' })}
+              active={!state.gameOver}
             />
           )}
         </div>
       </header>
 
       <section className='board'>
-        {gameCards.map((card) => (
+        {state.gameCards.map((card) => (
           <Card
             key={card.cardId}
             card={card}
@@ -163,9 +139,9 @@ const GamePage = () => {
         ))}
       </section>
 
-      {gameOver && (
+      {state.gameOver && (
         <GameOver
-          score={score}
+          score={state.score}
           onRestart={() => window.location.reload()}
           onViewScores={() => navigate('/scorespage')}
         />

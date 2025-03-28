@@ -1,7 +1,7 @@
 import React from 'react';
 import './Card.css';
 
-const Card = React.memo(({ card, onClick }) => {
+const Card = ({ card, onClick }) => {
   console.log('Renderizando carta', card.cardId);
   const handleClick = () => {
     if (!card.matched) {
@@ -33,6 +33,6 @@ const Card = React.memo(({ card, onClick }) => {
       </div>
     </article>
   );
-});
+};
 
 export default Card;

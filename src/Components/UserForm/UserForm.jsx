@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './UserForm.css';
 
 const UserForm = ({ onSubmit }) => {
   console.log('Renderizando UserForm');
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+
+  const nameRef = useRef();
+  const ageRef = useRef();
   const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null);
+
+    const name = nameRef.current.value;
+    const age = ageRef.current.value;
 
     if (Number(age) < 12) {
       setError('Debes tener al menos 12 años para jugar.');
@@ -28,8 +32,7 @@ const UserForm = ({ onSubmit }) => {
         <input
           type='text'
           id='name'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          ref={nameRef}
           placeholder='Introduce tu nombre'
           required
         />
@@ -40,8 +43,7 @@ const UserForm = ({ onSubmit }) => {
         <input
           type='number'
           id='age'
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
+          ref={ageRef}
           placeholder='Introduce tu edad'
           required
         />

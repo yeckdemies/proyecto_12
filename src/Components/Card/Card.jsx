@@ -1,17 +1,18 @@
 import React from 'react';
 import './Card.css';
 
-const Card = ({ card, onClick }) => {
+const Card = ({ card, cardId, onClick }) => {
   console.log('Renderizando carta', card.cardId);
+
   const handleClick = () => {
     if (!card.matched) {
-      onClick(card.cardId);
+      onClick(cardId);
     }
   };
 
   const handleKeyDown = (e) => {
     if ((e.key === 'Enter' || e.key === ' ') && !card.matched) {
-      onClick(card.cardId);
+      onClick(cardId);
     }
   };
 
@@ -20,9 +21,9 @@ const Card = ({ card, onClick }) => {
       className={`card ${card.flipped || card.matched ? 'flipped' : ''}`}
       role='button'
       tabIndex='0'
-      aria-label={`Carta de ${card.name}`}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      aria-label={`Carta de ${card.name}`}
       aria-disabled={card.matched}
     >
       <div className='card-inner'>
@@ -35,4 +36,8 @@ const Card = ({ card, onClick }) => {
   );
 };
 
-export default Card;
+const areEqual = (prevProps, nextProps) =>
+  prevProps.card.flipped === nextProps.card.flipped &&
+  prevProps.card.matched === nextProps.card.matched;
+
+export default React.memo(Card, areEqual);

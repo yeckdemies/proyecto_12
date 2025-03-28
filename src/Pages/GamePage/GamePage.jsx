@@ -136,7 +136,8 @@ const GamePage = () => {
           <Card
             key={card.cardId}
             card={card}
-            onClick={() => handleCardClick(card.cardId)}
+            cardId={card.cardId}
+            onClick={handleCardClick}
           />
         ))}
       </section>

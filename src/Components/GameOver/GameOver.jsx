@@ -2,6 +2,7 @@ import React from 'react';
 import './GameOver.css';
 
 const GameOver = ({ score, onRestart, onViewScores }) => {
+  console.log('Renderizando GameOver');
   return (
     <div className='gameover-overlay'>
       <div className='gameover-modal'>

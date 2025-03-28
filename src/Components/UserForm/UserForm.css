@@ -3,7 +3,7 @@
   max-width: 400px;
   margin: var(--spacing-lg) auto;
   padding: var(--spacing-lg);
-  background-color: rgba(0, 0, 0, 0.75); /* Fondo oscuro con transparencia */
+  background-color: rgba(0, 0, 0, 0.75);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   color: var(--text-color);
@@ -40,7 +40,7 @@
 }
 
 .error-message {
-  color: var(--accent-color);
+  color: var(--error-color);
   font-size: var(--font-size-small);
   text-align: center;
   margin-top: var(--spacing-xs);

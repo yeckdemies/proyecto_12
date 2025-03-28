@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Timer.css';
 
 const Timer = ({ initialSeconds, onTimeUp }) => {
+  console.log('Renderizando Timer');
   const [seconds, setSeconds] = useState(initialSeconds);
 
   useEffect(() => {

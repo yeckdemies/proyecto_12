@@ -1,6 +1,10 @@
 .card {
-  width: 150px;
-  height: 200px;
+  width: 20vw;
+  height: 26.6vw;
+  max-width: 150px;
+  max-height: 200px;
+  min-width: 80px;
+  min-height: 110px;
   perspective: 1000px;
   cursor: pointer;
 }
@@ -60,9 +64,16 @@
   cursor: default;
 }
 
+@media (max-width: 768px) {
+  .card {
+    width: 25vw;
+    height: 33vw;
+  }
+}
+
 @media (max-width: 480px) {
   .card {
-    width: 120px;
-    height: 160px;
+    width: 30vw;
+    height: 40vw;
   }
 }

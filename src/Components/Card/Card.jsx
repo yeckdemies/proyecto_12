@@ -2,6 +2,7 @@ import React from 'react';
 import './Card.css';
 
 const Card = React.memo(({ card, onClick }) => {
+  console.log('Renderizando carta', card.cardId);
   const handleClick = () => {
     if (!card.matched) {
       onClick(card.cardId);

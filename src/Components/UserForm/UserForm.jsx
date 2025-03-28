@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './UserForm.css';
 
 const UserForm = ({ onSubmit }) => {
+  console.log('Renderizando UserForm');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [error, setError] = useState(null);

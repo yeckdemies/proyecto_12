@@ -1,7 +1,9 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
+  console.log('Renderizando Header');
   return (
     <header className='main-header'>
       <nav>
@@ -17,5 +19,4 @@ const Header = () => {
     </header>
   );
 };
-
 export default Header;

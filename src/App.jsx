@@ -10,6 +10,7 @@ import ScoresPage from './Pages/ScoresPage/ScoresPage';
 import NotFound from './Pages/NotFound/NotFound';
 
 function App() {
+  console.log('Renderizando App');
   return (
     <div className='app'>
       <Header />
